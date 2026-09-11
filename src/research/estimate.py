@@ -2,7 +2,7 @@
 
 For each page and window the statistic is on the log scale:
 
-* position      mean of log(position) over days with impressions;
+* position      log of impression-weighted position within each page/window;
 * clicks        log((clicks + 0.5) / calendar days);
 * ctr_adjusted  log((clicks + 0.5) / (expected clicks + 0.5)), where expected
                 clicks come from a CTR-by-position curve fitted only on data
@@ -28,7 +28,7 @@ import pandas as pd
 
 from .config import arms, inferential
 
-MODEL_VERSION = "did-v1"
+MODEL_VERSION = "did-v2"
 CTR_EDGES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 30]
 PAGE_WINDOW_COLUMNS = ["hypothesis_id", "arm", "window_key", "page", "role", "period", "metric",
                        "n_days", "value", "eligible"]
@@ -104,12 +104,13 @@ def window_value(rows: pd.DataFrame, metric: str, start: str, end: str, curve: d
         calendar_days = (date.fromisoformat(end) - date.fromisoformat(start)).days
         if len(rows) == 0 or calendar_days <= 0:
             return 0, np.nan
-        return len(rows), float(np.log((rows["clicks"].sum() + 0.5) / calendar_days))
+        return int((rows["impressions"] > 0).sum()), float(np.log((rows["clicks"].sum() + 0.5) / calendar_days))
     shown = rows[rows["impressions"] > 0]
     if len(shown) == 0:
         return 0, np.nan
     if metric == "position":
-        return len(shown), float(np.log(shown["position"].to_numpy()).mean())
+        position = np.average(shown["position"].to_numpy(), weights=shown["impressions"].to_numpy())
+        return len(shown), float(np.log(position))
     clicks = shown["clicks"].sum() + 0.5
     if metric == "ctr_adjusted":
         expected = float((shown["impressions"].to_numpy() * expected_ctr(curve, shown["position"])).sum())

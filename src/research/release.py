@@ -44,6 +44,8 @@ def release_run(ctx, junit: str | Path, releases_dir: Path, site_dir: Path | Non
             problems.append("JUnit report contains no tests")
         if summary["failures"] or summary["errors"]:
             problems.append(f"tests not clean: {summary['failures']} failed, {summary['errors']} errors")
+        if summary["skipped"]:
+            problems.append(f"required tests skipped: {summary['skipped']}")
         if not summary["attributes_consistent"]:
             problems.append("JUnit suite attributes disagree with test cases")
     out = releases_dir / ctx.run_id

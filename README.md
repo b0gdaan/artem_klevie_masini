@@ -16,6 +16,18 @@ Google Search Console, проверку устойчивости, отчёт и 
 
 ## Для Артёма: что скачать
 
+### Методическая версия от 11 сентября 2026
+
+[PDF практической части](thesis/Diplomsko_delo_Rakhmanov_metodicna_razlicica.pdf) содержит
+синтетический эксперимент did-v2 и отдельный реальный HTML-аудит. Это рабочая методическая
+версия, а не завершённый диплом. [Исходный текст](thesis/Prakticni_del_metodicna_razlicica.md)
+и [журнал ревизии](docs/REVISION_2026-09-11.md) описывают ограничения и оставшиеся задачи.
+
+Сборка PDF: установите `reportlab`, затем выполните
+`python thesis/tools/build_method_pdf.py --font-dir C:/Windows/Fonts`.
+Для другой ОС укажите каталог со шрифтами Times New Roman (`times.ttf`, `timesbd.ttf`,
+`timesi.ttf`, `timesbi.ttf`). Графики и таблица проверенного запуска сохранены в `thesis/evidence/`.
+
 - **Всё сразу:** [Download ZIP](https://github.com/b0gdaan/artem_klevie_masini/archive/refs/heads/main.zip)
   (или зелёная кнопка *Code → Download ZIP*).
 - **Документы отдельно:** [Releases](https://github.com/b0gdaan/artem_klevie_masini/releases), архив с документами.

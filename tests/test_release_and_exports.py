@@ -62,7 +62,7 @@ def test_site_export_matches_metrics_table(smoke_run):
     site = read_json(run_path(smoke_run.run_dir, "report") / "site_data.json")
     metrics = read_table(run_path(smoke_run.run_dir, "metrics")).set_index("hypothesis_id")
     assert site["run_id"] == smoke_run.run_id and site["mode"] == "synthetic"
-    assert site["model_version"] == "did-v1"
+    assert site["model_version"] == "did-v2"
     assert site["data_period"]["end"] <= site["available_until"]
     for item in site["hypotheses"]:
         row = metrics.loc[item["hypothesis_id"]]

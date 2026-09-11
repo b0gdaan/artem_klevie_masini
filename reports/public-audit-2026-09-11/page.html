@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEO-optimizacija: demonstrator raziskave</title>
+<meta name="description" content="Ponovljiv cevovod za SEO-revizijo spletišča in merjenje učinkov SEO-ukrepov z razliko razlik.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Diplomsko delo · Računalništvo (Pearson BTEC HND in Computing) · 2026</p>
+    <h1>SEO-optimizacija spletnih mest</h1>
+    <p class="lede">Metode in strategije doseganja visokih pozicij v iskalnikih. Stran prikazuje en preverjen zagon
+      ponovljivega cevovoda: revizijo spletišča, oceno učinkov ukrepov in preverjanje robustnosti.</p>
+    <div class="banner" role="status">
+      <span class="banner-icon" aria-hidden="true">⚠</span>
+      <div>
+        <strong id="mode-label">Nalaganje podatkov …</strong>
+        <p id="mode-note">Rezultati spodaj izhajajo iz fiktivnega spletišča z znanimi vnesenimi učinki. Namen je
+          preveriti, ali metoda pravilno najde učinek, kjer obstaja, in ga ne najde, kjer ga ni. Niso rezultati
+          resničnega podjetja.</p>
+      </div>
+    </div>
+    <dl class="meta">
+      <div><dt>Zagon</dt><dd id="meta-run">—</dd></div>
+      <div><dt>Različica kode</dt><dd id="meta-commit">—</dd></div>
+      <div><dt>Model</dt><dd id="meta-model">—</dd></div>
+      <div><dt>Obdobje podatkov</dt><dd id="meta-period">—</dd></div>
+      <div><dt>Presečni datum</dt><dd id="meta-cutoff">—</dd></div>
+      <div><dt>Testi izdaje</dt><dd id="meta-tests">—</dd></div>
+    </dl>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Vsebina">
+  <div class="wrap">
+    <a href="#rezultati">Hipoteze</a>
+    <a href="#casovne-vrste">Časovne vrste</a>
+    <a href="#robustnost">Robustnost</a>
+    <a href="#revizija">Revizija</a>
+    <a href="#metoda">Metoda</a>
+    <a href="#ponovljivost">Ponovljivost</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <p id="load-error" class="error" hidden></p>
+
+  <section id="rezultati">
+    <h2>Rezultati hipotez</h2>
+    <p class="section-lede">Točka je ocena učinka, širši svetli pas 95-odstotni interval zaupanja, tanka črta
+      Bonferronijev interval, s katerim odločamo, navpična oznaka pa prag iz dispozicije. Hipoteza je
+      <em>podprta</em> le, če je celoten Bonferronijev interval nad pragom.</p>
+    <figure class="card">
+      <div class="legend" aria-hidden="true">
+        <span class="chip"><i class="swatch swatch-wide"></i>95 % IZ</span>
+        <span class="chip"><i class="swatch swatch-thin"></i>Bonferroni IZ</span>
+        <span class="chip"><i class="swatch swatch-tick"></i>prag hipoteze</span>
+        <span class="chip"><i class="swatch swatch-dot"></i>ocena</span>
+      </div>
+      <div id="effects-chart" class="chart"></div>
+      <figcaption>Pri položaju pozitivna vrednost pomeni izboljšanje (nižji položaj). Podrobnosti ob prehodu z
+        miško ali s tipko Tab.</figcaption>
+    </figure>
+    <div class="table-wrap card">
+      <table id="hyp-table">
+        <caption class="sr-only">Hipoteze, ocene in odločitve</caption>
+        <thead></thead><tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="casovne-vrste">
+    <h2>Časovne vrste okoli uvedbe ukrepa</h2>
+    <p class="section-lede">Indeks glede na predobdobje (= 100) za obravnavane in kontrolne strani. Osenčeno
+      obdobje uvajanja je izključeno iz ocene, ker Google spremembe ponovno pregleda z zamikom.</p>
+    <div class="filters" role="tablist" id="series-tabs" aria-label="Izbira hipoteze"></div>
+    <figure class="card">
+      <div class="legend" id="series-legend"></div>
+      <div id="series-chart" class="chart"></div>
+      <details>
+        <summary>Tabela vrednosti</summary>
+        <div class="table-wrap"><table id="series-table"><thead></thead><tbody></tbody></table></div>
+      </details>
+    </figure>
+  </section>
+
+  <section id="robustnost">
+    <h2>Ablacija in placebo test</h2>
+    <p class="section-lede">Ablacija ponovi oceno na istih straneh brez kontrolne skupine oziroma brez
+      prilagoditve CTR položaju. Placebo test premakne datum uvedbe v čas pred ukrepom: tam učinka ne sme biti.</p>
+    <div class="grid-2">
+      <div class="table-wrap card"><h3>Ablacija</h3><table id="ablation-table"><thead></thead><tbody></tbody></table></div>
+      <div class="table-wrap card"><h3>Placebo (lažni datum)</h3><table id="placebo-table"><thead></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <section id="revizija">
+    <h2>Revizija spletišča</h2>
+    <p class="section-lede">Samodejni pregled HTML pred in po optimizaciji. Pregled dostopnosti zajema le del
+      kriterijev WCAG 2.1 (alt, lang, naslovi, oznake obrazcev, besedilo povezav) in ne nadomešča Lighthouse ali WAVE.</p>
+    <figure class="card">
+      <div class="legend" aria-hidden="true">
+        <span class="chip"><i class="swatch" style="background:var(--series-2)"></i>Pred optimizacijo</span>
+        <span class="chip"><i class="swatch" style="background:var(--series-1)"></i>Po optimizaciji</span>
+      </div>
+      <div id="audit-chart" class="chart"></div>
+    </figure>
+    <div class="grid-2">
+      <div class="table-wrap card"><h3>Najdene težave</h3><table id="audit-table"><thead></thead><tbody></tbody></table></div>
+      <div class="table-wrap card"><h3>Lighthouse (mediana po skupinah)</h3><table id="lighthouse-table"><thead></thead><tbody></tbody></table></div>
+    </div>
+  </section>
+
+  <section id="metoda">
+    <h2>Metoda</h2>
+    <div class="prose card">
+      <p><strong>Zasnova.</strong> Strani so pred ukrepi razdeljene v skupine: tehnična, vsebinska, lokalna
+        optimizacija, dostopnost in kontrolna skupina brez sprememb. Učinek je razlika razlik: sprememba na
+        obravnavanih straneh minus sprememba na kontrolnih straneh v istem obdobju. Tako se odštejejo sezonskost,
+        splošni trendi in posodobitve Googlovega algoritma, ki vplivajo na vse strani.</p>
+      <p><strong>Okna.</strong> Predobdobje traja 6 tednov in se konča teden pred ukrepom. Sledita 2 tedna
+        uvajanja, ki nista vključena v oceno, nato 6 tednov poobdobja. Podatki Search Console veljajo za končne
+        po 3 dneh; vse, kar ob presečnem datumu še ni končno, je izključeno.</p>
+      <p><strong>Metrike.</strong> Povprečni položaj (utežen s prikazi), CTR, prilagojen položaju (dejanski klik
+        glede na pričakovani CTR pri istem položaju, ocenjen samo iz podatkov pred prvim ukrepom), in kliki iz
+        lokalnih poizvedb.</p>
+      <p><strong>Negotovost.</strong> Intervali so dobljeni z bootstrapom po straneh: celotne strani se vzorčijo s
+        ponavljanjem, zato ostane odvisnost med dnevi iste strani ohranjena. Ker se preverjajo štiri hipoteze hkrati,
+        odločitev temelji na Bonferronijevem intervalu. Pri malem številu strani so intervali široki; to je lastnost
+        podatkov, ne napaka metode.</p>
+      <p><strong>Omejitve.</strong> Rezultat velja za eno spletišče in ne posplošuje na vsa mala podjetja. Domain
+        Authority je metrika podjetja Moz in je Google ne uporablja, zato je H5 samo opisna. Google dostopnosti ne
+        navaja kot neposrednega dejavnika uvrščanja, zato je ničelni rezultat za H4 pričakovan in veljaven izid.</p>
+    </div>
+  </section>
+
+  <section id="ponovljivost">
+    <h2>Ponovljivost</h2>
+    <div class="prose card">
+      <p>Vsak zagon ima manifest z zgoščenkami kode, konfiguracije, podatkov in okolja. Tabele, slike in ta stran so
+        ustvarjeni iz istega zagona, preverjanje pa metrike ponovno izračuna iz shranjenih napovedi.</p>
+      <pre><code>python -m pip install -r requirements.lock
+python -m pip install --no-deps -e .
+python -m research doctor
+python -m research smoke
+python -m research verify --run-id latest</code></pre>
+      <p>Izvorna koda: <a id="repo-link" href="https://github.com/b0gdaan/artem_klevie_masini">github.com/b0gdaan/artem_klevie_masini</a>.
+        Kontrolna vsota podatkov: <code id="meta-data-sha">—</code>.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">Demonstracija metode na sintetičnih podatkih. Stran ustvari GitHub Actions ob vsaki objavi kode.</div>
+</footer>
+<div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>

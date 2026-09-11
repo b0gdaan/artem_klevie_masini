@@ -14,6 +14,24 @@ Google Search Console, проверку устойчивости, отчёт и 
 > все цифры на странице и в отчётах проверяют метод, а не отвечают на вопрос диплома.
 > Следующие шаги описаны в [docs/HANDOFF.md](docs/HANDOFF.md).
 
+## Для Артёма: что скачать
+
+- **Всё сразу:** [Download ZIP](https://github.com/b0gdaan/artem_klevie_masini/archive/refs/heads/main.zip)
+  (или зелёная кнопка *Code → Download ZIP*).
+- **Документы отдельно:** [Releases](https://github.com/b0gdaan/artem_klevie_masini/releases), архив с документами.
+
+| Файл | Что это |
+|---|---|
+| [thesis/Dispozicija_popravljena_Rakhmanov.docx](thesis/Dispozicija_popravljena_Rakhmanov.docx) | исправленная диспозиция в форме школы, в конце список из 16 исправлений; согласовать с ментором |
+| [thesis/Diplomsko_delo_predloga_Rakhmanov.docx](thesis/Diplomsko_delo_predloga_Rakhmanov.docx) | шаблон диплома в формате Academia: титул, izjava, povzetek/abstract, оглавление, главы, подписи, литература |
+| [docs/OBLIKOVANJE_ACADEMIA.md](docs/OBLIKOVANJE_ACADEMIA.md) | как оформлять диплом в Academia (по 15 работам 2026 г.) и критерии BTEC Unit 16 |
+| [docs/DISPOZICIJA_REVIEW.md](docs/DISPOZICIJA_REVIEW.md) | разбор диспозиции: риски, вопросы на защите, новый график |
+| [thesis/literatura.md](thesis/literatura.md) | проверенный список литературы в APA (sl) |
+| [thesis/kazalo.md](thesis/kazalo.md) | структура диплома и откуда брать материал |
+
+При открытии DOCX Word предложит обновить поля: нужно согласиться, тогда заполнится оглавление.
+Пересобрать документы: `pip install -r thesis/tools/requirements.txt`, затем `python thesis/tools/build_docs.py`.
+
 ## Почему Python
 
 Практическая часть включает краулинг и разбор HTML, выгрузку данных Search Console и PageSpeed Insights

@@ -27,6 +27,10 @@ Google на сайте компании по сравнению с неизме�
 | 11.09.2026 | GitHub Actions run 34599437592, ubuntu, Python 3.11 | clean install из lock, doctor, pytest, smoke, verify, release, deploy Pages | 49/49; run `smoke-20260911T123306Z-b237fb` из `a2f67d1`, `working_tree_dirty=false` |
 | 11.09.2026 | сверка Windows и CI | `data_sha256` одного снимка различался (`7d2db6f5…` vs `7e3badd1…`) | исправлено: порядок файлов в `tree_sha256` теперь по строке POSIX, добавлен тест; `.gitattributes` переупорядочен |
 
+| 11.09.2026 | academia.si (сайт, sitemap, FAQ, 15 PDF дипломов 2026) | поиск правил оформления; замер шрифтов, полей, интервалов, порядка разделов | публичного документа с правилами нет; формат восстановлен по работам → `docs/OBLIKOVANJE_ACADEMIA.md` |
+| 11.09.2026 | издатели, DOI, uradni-list.si, StatCounter | проверка литературы и фактов диспозиции | исправлены Giomelakis, ZDPSI вместо ZDSMA, Whitespark 2026, доля Google 93,2 % (не >95 %) |
+| 11.09.2026 | `thesis/tools/build_docs.py` | генерация исправленной диспозиции и шаблона диплома (DOCX) | см. коммит |
+
 Не выполнялось: реальный краулинг по сети, выгрузка GSC, запуск `configs/full.yaml` (нет данных),
 проверка сайта скринридером.
 

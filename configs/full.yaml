@@ -49,7 +49,7 @@ hypotheses:
     metric: clicks
     segment: local
     threshold: 0.0
-    statement_sl: "Lokalna optimizacija poveča klike iz lokalnih poizvedb bolj kot splošna vsebinska optimizacija."
+    statement_sl: "Na izbranem spletnem mestu lokalna optimizacija poveča klike iz lokalnih poizvedb bolj kot splošna vsebinska optimizacija."
     limitation_sl: "Velja za eno spletišče; ne posplošuje na vsa slovenska MSP."
   - id: H4
     kind: did
@@ -64,8 +64,8 @@ hypotheses:
     intervention: links
     metric: domain_authority
     threshold: 10
-    horizon_days: 183
-    statement_sl: "Gradnja povratnih povezav v 6 mesecih poveča Domain Authority za vsaj 10 točk (opisno)."
+    horizon_days: 61                # from link building start (1 Oct) to the cutoff; see corrected dispozicija
+    statement_sl: "Gradnja povratnih povezav v obdobju raziskave poveča Domain Authority (Moz); cilj iz dispozicije je vsaj 10 točk (opisno)."
     limitation_sl: "Domain Authority je metrika podjetja Moz, ne Googla; brez kontrolne skupine."
 
 required_stages: [ingest, validate, transform, split, fit, predict, evaluate, diagnostics, report]

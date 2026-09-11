@@ -1,0 +1,29 @@
+# Produced with Python 3.11 via `pip freeze` in a clean venv (2026-09-11).
+# Install: python -m pip install -r requirements.lock && python -m pip install --no-deps -e .
+beautifulsoup4==4.15.0
+certifi==2026.7.22
+charset-normalizer==3.5.1
+colorama==0.4.6
+contourpy==1.3.3
+cycler==0.12.1
+fonttools==4.65.0
+idna==3.19
+iniconfig==2.3.0
+kiwisolver==1.5.1
+matplotlib==3.11.1
+numpy==2.4.6
+packaging==26.3
+pandas==3.0.5
+pillow==12.3.0
+pluggy==1.6.0
+Pygments==2.21.0
+pyparsing==3.3.2
+pytest==9.1.1
+python-dateutil==2.9.0.post0
+PyYAML==6.0.3
+requests==2.34.2
+six==1.17.0
+soupsieve==2.9.2
+typing_extensions==4.16.0
+tzdata==2026.3
+urllib3==2.7.0

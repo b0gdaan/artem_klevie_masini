@@ -1,0 +1,67 @@
+name: tests-smoke-pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Clean install from the lock file
+        run: |
+          python -m pip install -r requirements.lock
+          python -m pip install --no-deps -e .
+
+      - name: Doctor
+        run: python -m research doctor --config configs/smoke.yaml
+
+      - name: Tests (JUnit)
+        run: python -m pytest -q -p no:cacheprovider --junitxml=reports/junit.xml
+
+      - name: Smoke run (offline synthetic snapshot)
+        run: python -m research --quiet smoke
+
+      - name: Verify
+        run: python -m research verify --run-id latest
+
+      - name: Release run and export site data
+        run: python -m research release --run-id latest --junit reports/junit.xml --site-dir site
+
+      - name: Keep release bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: release
+          path: releases/
+
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

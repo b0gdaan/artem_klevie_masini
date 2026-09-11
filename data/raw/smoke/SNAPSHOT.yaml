@@ -1,0 +1,11 @@
+schema_version: 1
+name: smoke
+mode: synthetic
+generator: research.synthetic.generate_snapshot
+seed: 20260911
+period:
+  start: '2026-02-01'
+  end: '2026-09-07'
+site: https://primer-finance.test (fiktivno spletišče)
+note_sl: Sintetični podatki za preverjanje cevovoda. Niso podatki resničnega podjetja.
+note_ru: Синтетические данные для проверки пайплайна. Это не данные реальной компании.

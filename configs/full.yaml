@@ -1,0 +1,71 @@
+# Full experiment on the real site. Fill in the snapshot and dates BEFORE looking at post-period data
+# and commit this file; the commit is the pre-registration (see docs/PROTOCOL.md).
+schema_version: 1
+name: full
+mode: snapshot
+seed: 20261001
+
+data:
+  snapshot: data/raw/site_2026    # TODO: real snapshot folder (not committed, see docs/DATA.md)
+  gsc_lag_days: 3
+  analysis_cutoff: "2026-12-01"   # TODO: fix before the post period ends
+
+design:
+  pre_days: 42
+  buffer_days: 7
+  ramp_days: 14
+  post_days: 42
+  min_post_days: 28
+  min_days_per_window: 20
+  control_group: control
+  placebo_shift_days: 63
+
+inference:
+  bootstrap_reps: 10000
+  ci_level: 0.95
+  multiplicity: bonferroni
+
+hypotheses:
+  - id: H1
+    kind: did
+    intervention: technical
+    metric: position
+    segment: all
+    threshold: 0.20
+    statement_sl: "Tehnična optimizacija izboljša povprečni položaj optimiziranih strani za vsaj 20 % glede na kontrolne strani."
+    limitation_sl: "Povprečni položaj v GSC je utežen s prikazi in se spreminja tudi z naborom poizvedb."
+  - id: H2
+    kind: did
+    intervention: content
+    metric: ctr_adjusted
+    segment: all
+    threshold: 0.15
+    statement_sl: "Vsebinska optimizacija poveča CTR, prilagojen položaju, za vsaj 15 % v 6 tednih po uvajalnem obdobju."
+    limitation_sl: "Pričakovani CTR je ocenjen iz podatkov pred prvim ukrepom."
+  - id: H3
+    kind: did_difference
+    intervention: local
+    compare_to: content
+    metric: clicks
+    segment: local
+    threshold: 0.0
+    statement_sl: "Lokalna optimizacija poveča klike iz lokalnih poizvedb bolj kot splošna vsebinska optimizacija."
+    limitation_sl: "Velja za eno spletišče; ne posplošuje na vsa slovenska MSP."
+  - id: H4
+    kind: did
+    intervention: accessibility
+    metric: position
+    segment: all
+    threshold: 0.0
+    statement_sl: "Izboljšave dostopnosti (WCAG 2.1) izboljšajo povprečni položaj strani."
+    limitation_sl: "Google dostopnosti ne navaja kot neposrednega dejavnika uvrščanja."
+  - id: H5
+    kind: descriptive
+    intervention: links
+    metric: domain_authority
+    threshold: 10
+    horizon_days: 183
+    statement_sl: "Gradnja povratnih povezav v 6 mesecih poveča Domain Authority za vsaj 10 točk (opisno)."
+    limitation_sl: "Domain Authority je metrika podjetja Moz, ne Googla; brez kontrolne skupine."
+
+required_stages: [ingest, validate, transform, split, fit, predict, evaluate, diagnostics, report]

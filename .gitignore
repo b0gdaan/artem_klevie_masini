@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+build/
+
+# results of code: reproducible from data/raw + commit
+runs/
+releases/
+data/processed/*
+!data/processed/.gitkeep
+reports/junit*.xml
+site/data/
+
+# real site data is confidential and never committed (see docs/DATA.md)
+data/raw/*
+!data/raw/smoke/
+!data/raw/README.md

@@ -1,0 +1,4 @@
+# Raw snapshots are hashed byte-for-byte: never convert line endings.
+data/raw/** -text
+* text=auto eol=lf
+*.png binary

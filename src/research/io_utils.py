@@ -85,13 +85,14 @@ def tree_sha256(root: str | Path, exclude: tuple[str, ...] = ("SHA256SUMS",)) ->
     """Hash every file under ``root``; the combined hash covers names and contents."""
     root = Path(root)
     files = {}
-    for path in sorted(p for p in root.rglob("*") if p.is_file()):
+    for path in (p for p in root.rglob("*") if p.is_file()):
         rel = path.relative_to(root).as_posix()
         if rel in exclude or any(part.startswith(".") for part in path.relative_to(root).parts):
             continue
         files[rel] = sha256_file(path)
-    listing = "".join(f"{sha}  {rel}\n" for rel, sha in files.items())
-    return sha256_bytes(listing.encode("utf-8")), files
+    # Order by the POSIX string: Path ordering is case-insensitive on Windows only.
+    files = dict(sorted(files.items()))
+    return sha256_bytes(format_sha256sums(files).encode("utf-8")), files
 
 
 def format_sha256sums(files: dict[str, str]) -> str:

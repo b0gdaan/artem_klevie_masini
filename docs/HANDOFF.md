@@ -15,7 +15,20 @@ Google на сайте компании по сравнению с неизме�
 | Демонстрация | https://b0gdaan.github.io/artem_klevie_masini/ (smoke-запуск из CI, режим «синтетический сценарий») |
 | Данные | только синтетический `data/raw/smoke` (seed 20260911). **Реальных данных нет** |
 | Окружение | Python 3.11, `requirements.lock`; локально `.venv` в корне проекта |
-| Завершено | пайплайн ingest → report, verify, release; 49 тестов; сайт; протокол-черновик; разбор диспозиции; литература |
+| Завершено | пайплайн ingest → report, verify, release; 50 тестов; сайт; протокол-черновик; разбор диспозиции; литература |
+| `data_sha256` smoke | `7e3badd1fe3aed14ab721cb1b7e76c9cac657479a84d95919f80eaa617ad333e` (одинаков на Windows и Linux) |
+
+## Журнал проверок
+
+| Дата (UTC) | Где | Что выполнено | Результат |
+|---|---|---|---|
+| 11.09.2026 | Windows 11, Python 3.11.9, `.venv` | doctor; `pytest --junitxml`; smoke; verify; release в `site/` | 49 passed; verify passed |
+| 11.09.2026 | локальный браузер (http.server) | заполненность таблиц, SVG, тултип, вкладки, отсутствие горизонтальной прокрутки на 1280 px и 375 px, наложение подписей | без ошибок консоли; визуальные скриншоты ниже первого экрана получить не удалось (панель браузера скрыта) |
+| 11.09.2026 | GitHub Actions run 34599437592, ubuntu, Python 3.11 | clean install из lock, doctor, pytest, smoke, verify, release, deploy Pages | 49/49; run `smoke-20260911T123306Z-b237fb` из `a2f67d1`, `working_tree_dirty=false` |
+| 11.09.2026 | сверка Windows и CI | `data_sha256` одного снимка различался (`7d2db6f5…` vs `7e3badd1…`) | исправлено: порядок файлов в `tree_sha256` теперь по строке POSIX, добавлен тест; `.gitattributes` переупорядочен |
+
+Не выполнялось: реальный краулинг по сети, выгрузка GSC, запуск `configs/full.yaml` (нет данных),
+проверка сайта скринридером.
 
 ## Команды
 

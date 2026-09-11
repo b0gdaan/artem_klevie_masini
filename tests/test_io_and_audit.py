@@ -42,6 +42,16 @@ def test_tree_hash_detects_same_size_change(tmp_path):
     assert tree_sha256(tmp_path)[0] != before
 
 
+def test_tree_hash_is_independent_of_platform_path_ordering(tmp_path):
+    for name in ("b.txt", "SHA256SUMS", "A.txt", "crawl/x.html", "Z/y.csv"):
+        (tmp_path / name).parent.mkdir(parents=True, exist_ok=True)
+        (tmp_path / name).write_bytes(name.encode())
+    tree, files = tree_sha256(tmp_path)
+    assert list(files) == ["A.txt", "Z/y.csv", "b.txt", "crawl/x.html"]
+    expected = "".join(f"{sha256_bytes(n.encode())}  {n}\n" for n in files)
+    assert tree == sha256_bytes(expected.encode())
+
+
 def test_normalize_url_drops_fragment_and_lowercases_host():
     assert normalize_url("HTTPS://Example.TEST/a/#top") == "https://example.test/a/"
     assert normalize_url("https://example.test") == "https://example.test/"
